@@ -1,10 +1,28 @@
 package com.example.languageapp.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.languageapp.R
+
+@OptIn(ExperimentalTextApi::class)
+val fredoka = FontFamily(
+    Font(
+        R.font.fredoka,
+        FontWeight.Normal,
+        variationSettings = FontVariation.Settings(FontVariation.weight(FontWeight.Normal.weight))
+    ),
+    Font(
+        R.font.fredoka,
+        FontWeight.Medium,
+        variationSettings = FontVariation.Settings(FontVariation.weight(FontWeight.Medium.weight))
+    ),
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

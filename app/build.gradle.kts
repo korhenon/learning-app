@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -39,6 +42,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -57,4 +64,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // Splash screen Android 12 API
     implementation("androidx.core:core-splashscreen:1.0.1")
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.8.3")
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    // Hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 }
