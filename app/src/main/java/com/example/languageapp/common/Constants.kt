@@ -1,4 +1,4 @@
-package com.example.languageapp.data
+package com.example.languageapp.common
 
 import com.example.languageapp.R
 import com.example.languageapp.data.models.OnboardingPage

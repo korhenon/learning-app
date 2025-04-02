@@ -84,7 +84,9 @@ fun SelectLanguageScreen(
         }
     }
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-        PrimaryButton(text = "Choose", onClick = {}, modifier = Modifier.padding(24.dp))
+        PrimaryButton(text = "Choose", onClick = {
+            onAction(SelectLanguageAction.Choose)
+        }, modifier = Modifier.padding(24.dp))
     }
 }
 

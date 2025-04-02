@@ -8,8 +8,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.languageapp.ui.screens.choosePassword.ChoosePasswordRoot
+import com.example.languageapp.ui.screens.login.LoginRoot
 import com.example.languageapp.ui.screens.onboarding.OnboardingRoot
 import com.example.languageapp.ui.screens.selectLanguage.SelectLanguageRoot
+import com.example.languageapp.ui.screens.signup.SignUpRoot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -40,5 +43,8 @@ fun NavigationComponent(navigator: Navigator) {
     NavHost(navController = navController, startDestination = navigator.startDestination) {
         composable<Destination.Onboarding> { OnboardingRoot() }
         composable<Destination.SelectLanguage> { SelectLanguageRoot() }
+        composable<Destination.Login> { LoginRoot() }
+        composable<Destination.Signup> { SignUpRoot() }
+        composable<Destination.ChoosePassword> { ChoosePasswordRoot() }
     }
 }
