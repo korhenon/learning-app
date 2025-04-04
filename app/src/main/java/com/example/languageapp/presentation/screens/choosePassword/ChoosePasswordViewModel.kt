@@ -79,16 +79,17 @@ class ChoosePasswordViewModel @Inject constructor(
     private fun openPrivacy() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val file = File(context.filesDir, "privacy.pdf")
-                val inputStream = BufferedInputStream(context.assets.open("privacy.pdf"))
-                val outputStream = BufferedOutputStream(file.outputStream())
+                val file = File(context.filesDir, "Политика конфединциальности")
+                val inputStream = context.assets.open("privacy.pdf")
+                val outputStream = file.outputStream()
                 inputStream.use { input ->
                     outputStream.use { output ->
-                        output.write(input.read())
+                        input.copyTo(output)
                     }
                 }
                 withContext(Dispatchers.Main) {
-                    val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+                    val uri =
+                        FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
                     val intent = Intent(Intent.ACTION_VIEW).apply {
                         setDataAndType(uri, "application/pdf")
                         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

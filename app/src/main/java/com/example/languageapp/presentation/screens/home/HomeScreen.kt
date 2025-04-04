@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 import com.example.languageapp.R
+import com.example.languageapp.data.models.ExerciseType
 import com.example.languageapp.data.models.User
 import com.example.languageapp.presentation.composables.ExerciseCard
 import com.example.languageapp.presentation.theme.LanguageAppTheme
@@ -43,7 +44,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
                 .padding(start = 24.dp, end = 24.dp, top = 6.dp, bottom = 12.dp)
         ) {
             Image(
-                painter = rememberAsyncImagePainter(state.photo),
+                painter = rememberAsyncImagePainter(state.currentUser.photo),
                 contentDescription = null,
                 modifier = Modifier
                     .size(54.dp)
@@ -51,7 +52,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                text = "Hello, ${state.name}",
+                text = "Hello, ${state.currentUser.name}",
                 fontSize = 22.sp,
                 lineHeight = 28.sp,
                 fontFamily = fredoka,
@@ -129,32 +130,36 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
             modifier = Modifier.padding(start = 24.dp)
         )
         Spacer(Modifier.height(9.dp))
-        Row(Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
             ExerciseCard(
                 image = R.drawable.guess_the_animal,
                 name = "Guess the animal",
-                onClick = {},
+                onClick = { onAction(HomeAction.OpenExercise(ExerciseType.GuessTheAnimal)) },
                 color = colorScheme.primary,
                 modifier = Modifier.weight(1f)
             )
             ExerciseCard(
                 image = R.drawable.word_practice,
                 name = "Word practice",
-                onClick = {},
+                onClick = { onAction(HomeAction.OpenExercise(ExerciseType.WordPractice)) },
                 color = colorScheme.error,
                 modifier = Modifier.weight(1f)
             )
         }
         Spacer(Modifier.height(16.dp))
-        Row(Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp), horizontalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
             ExerciseCard(
                 image = R.drawable.audition,
-                name = "Guess the animal",
-                onClick = {},
+                name = "Audition",
+                onClick = { onAction(HomeAction.OpenExercise(ExerciseType.Audition)) },
                 color = colorScheme.secondary,
                 modifier = Modifier.weight(1f)
             )
@@ -176,8 +181,11 @@ private fun HomeScreenPreview() {
         Scaffold { innerPadding ->
             HomeScreen(
                 HomeState(
-                    name = "Emil",
-                    photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
+                    currentUser = User(
+                        name = "Emil",
+                        photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
+                        0f
+                    ),
                     topUsers = listOf(
                         User(
                             name = "Vincent van Gogh",
