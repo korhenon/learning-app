@@ -2,6 +2,7 @@ package com.example.languageapp.presentation.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,8 +29,10 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 import com.example.languageapp.R
 import com.example.languageapp.data.models.ExerciseType
+import com.example.languageapp.data.models.TopUser
 import com.example.languageapp.data.models.User
 import com.example.languageapp.presentation.composables.ExerciseCard
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.theme.LanguageAppTheme
 import com.example.languageapp.presentation.theme.fredoka
 
@@ -48,7 +51,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
                 contentDescription = null,
                 modifier = Modifier
                     .size(54.dp)
-                    .clip(CircleShape)
+                    .clip(CircleShape).clickable { onAction(HomeAction.OpenProfile) }
             )
             Spacer(Modifier.height(6.dp))
             Text(
@@ -91,7 +94,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painter = rememberAsyncImagePainter(user.photo),
+                        painter = rememberAsyncImagePainter(user.user.photo),
                         contentDescription = null,
                         modifier = Modifier
                             .size(36.dp)
@@ -99,7 +102,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
                     )
                     Spacer(Modifier.width(24.dp))
                     Text(
-                        text = user.name,
+                        text = user.user.name,
                         modifier = Modifier.weight(1f),
                         fontSize = 17.sp,
                         fontFamily = fredoka,
@@ -172,6 +175,7 @@ fun HomeScreen(state: HomeState, onAction: (HomeAction) -> Unit, modifier: Modif
             )
         }
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview
@@ -180,30 +184,7 @@ private fun HomeScreenPreview() {
     LanguageAppTheme {
         Scaffold { innerPadding ->
             HomeScreen(
-                HomeState(
-                    currentUser = User(
-                        name = "Emil",
-                        photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
-                        0f
-                    ),
-                    topUsers = listOf(
-                        User(
-                            name = "Vincent van Gogh",
-                            photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
-                            points = 12f
-                        ),
-                        User(
-                            name = "Dmitri Ivanovich Mendeleev",
-                            photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
-                            points = 10f
-                        ),
-                        User(
-                            name = "Vlad Tepes",
-                            photo = "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
-                            points = 8f
-                        )
-                    )
-                ), {}, Modifier.padding(innerPadding)
+                HomeState(), {}, Modifier.padding(innerPadding)
             )
         }
     }

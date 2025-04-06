@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.languageapp.R
 import com.example.languageapp.presentation.composables.CustomTextField
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.theme.LanguageAppTheme
 import com.example.languageapp.presentation.theme.fredoka
@@ -166,6 +167,7 @@ fun ChoosePasswordScreen(
             color = colorScheme.inverseOnSurface
         )
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.languageapp.R
 import com.example.languageapp.data.models.Word
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.composables.QuestionHeader
 import com.example.languageapp.presentation.theme.LanguageAppTheme
@@ -163,6 +164,7 @@ fun AuditionScreen(
             }
         }
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview

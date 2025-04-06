@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.languageapp.presentation.navigation.NavigationComponent
-import com.example.languageapp.presentation.navigation.Navigator
+import com.example.languageapp.domain.navigation.Navigator
 import com.example.languageapp.presentation.theme.LanguageAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

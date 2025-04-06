@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.languageapp.R
 import com.example.languageapp.presentation.composables.CustomTextField
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.theme.LanguageAppTheme
 import com.example.languageapp.presentation.theme.fredoka
@@ -92,7 +93,6 @@ fun LoginScreen(state: LoginState, onAction: (LoginAction) -> Unit, modifier: Mo
             onValueChange = { onAction(LoginAction.ChangePassword(it)) },
             label = "Password",
             modifier = Modifier.padding(horizontal = 24.dp),
-            isError = !state.isPasswordValid,
             isPassword = true
         )
         Spacer(Modifier.height(12.dp))
@@ -118,7 +118,9 @@ fun LoginScreen(state: LoginState, onAction: (LoginAction) -> Unit, modifier: Mo
                     append("Signup")
                 }
             },
-            modifier = Modifier.fillMaxWidth().clickable { onAction(LoginAction.SignUp) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onAction(LoginAction.SignUp) },
             textAlign = TextAlign.Center,
             fontSize = 17.sp,
             lineHeight = 22.sp,
@@ -126,6 +128,7 @@ fun LoginScreen(state: LoginState, onAction: (LoginAction) -> Unit, modifier: Mo
             color = colorScheme.inverseOnSurface
         )
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview

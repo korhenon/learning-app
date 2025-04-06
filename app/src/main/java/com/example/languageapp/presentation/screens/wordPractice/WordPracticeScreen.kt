@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.languageapp.data.models.Word
 import com.example.languageapp.presentation.composables.Answer
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.composables.QuestionHeader
 import com.example.languageapp.presentation.theme.LanguageAppTheme
@@ -88,6 +89,7 @@ fun WordPracticeScreen(
             modifier = Modifier.padding(24.dp)
         )
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview

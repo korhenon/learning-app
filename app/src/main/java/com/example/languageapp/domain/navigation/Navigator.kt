@@ -1,4 +1,4 @@
-package com.example.languageapp.presentation.navigation
+package com.example.languageapp.domain.navigation
 
 import androidx.navigation.NavOptionsBuilder
 import kotlinx.coroutines.flow.Flow

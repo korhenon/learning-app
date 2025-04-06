@@ -26,16 +26,19 @@ fun Answer(
     onSelect: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val buttonBackground =
-        if (!isSelected && !isRight) R.drawable.button_gray
-        else if (!isChecked) R.drawable.button_primary
-        else if (isRight) R.drawable.button_tertiary
-        else R.drawable.button_secondary
+    var buttonBackground = R.drawable.button_gray
 
+    if (isSelected && !isChecked) buttonBackground = R.drawable.button_primary
+    if (isChecked && isRight) buttonBackground = R.drawable.button_tertiary
+    if (isChecked && isSelected && !isRight) buttonBackground = R.drawable.button_secondary
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onSelect() },
+            .clickable {
+                if (!isChecked) {
+                    onSelect()
+                }
+            },
         contentAlignment = Alignment.Center
     )
     {

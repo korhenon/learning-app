@@ -25,3 +25,5 @@ val OnboardingPages = listOf(
 )
 
 val Languages = listOf("English", "Russian", "Belarus", "Kazakh", "Chinese")
+
+const val BASE_URL = "https://congenial-spoon.onrender.com/"

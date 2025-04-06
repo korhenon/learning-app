@@ -3,8 +3,8 @@ package com.example.languageapp.presentation.screens.selectLanguage
 import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.languageapp.presentation.navigation.Destination
-import com.example.languageapp.presentation.navigation.Navigator
+import com.example.languageapp.domain.navigation.Destination
+import com.example.languageapp.domain.navigation.Navigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

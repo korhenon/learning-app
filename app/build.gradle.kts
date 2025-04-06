@@ -78,4 +78,7 @@ dependencies {
     implementation("io.coil-kt.coil3:coil-svg:3.1.0")
     // Permissions
     implementation ("com.google.accompanist:accompanist-permissions:0.37.2")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 }

@@ -8,6 +8,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.languageapp.domain.navigation.Destination
+import com.example.languageapp.domain.navigation.NavigationAction
+import com.example.languageapp.domain.navigation.Navigator
 import com.example.languageapp.presentation.screens.audition.AuditionRoot
 import com.example.languageapp.presentation.screens.choosePassword.ChoosePasswordRoot
 import com.example.languageapp.presentation.screens.guessTheAnimal.GuessTheAnimalRoot
@@ -16,7 +19,6 @@ import com.example.languageapp.presentation.screens.home.HomeRoot
 import com.example.languageapp.presentation.screens.login.LoginRoot
 import com.example.languageapp.presentation.screens.onboarding.OnboardingRoot
 import com.example.languageapp.presentation.screens.profile.ProfileRoot
-import com.example.languageapp.presentation.screens.profile.ProfileScreen
 import com.example.languageapp.presentation.screens.selectLanguage.SelectLanguageRoot
 import com.example.languageapp.presentation.screens.signup.SignUpRoot
 import com.example.languageapp.presentation.screens.wordPractice.WordPracticeRoot

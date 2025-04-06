@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.theme.fredoka
 
@@ -82,4 +83,5 @@ fun ProfileScreen(
             )
         }
     }
+    InternetStateView(state.internetState, modifier)
 }

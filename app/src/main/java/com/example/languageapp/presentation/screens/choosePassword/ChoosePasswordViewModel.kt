@@ -2,14 +2,21 @@ package com.example.languageapp.presentation.screens.choosePassword
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.languageapp.common.isPasswordValid
-import com.example.languageapp.presentation.navigation.Destination
-import com.example.languageapp.presentation.navigation.Navigator
+import com.example.languageapp.data.exceptions.DataException
+import com.example.languageapp.data.exceptions.ExceptionReason
+import com.example.languageapp.domain.usecase.GetSignUpSavedStateUseCase
+import com.example.languageapp.domain.usecase.SignUpUseCase
+import com.example.languageapp.domain.usecase.UpdateSignUpSavedStateUseCase
+import com.example.languageapp.domain.navigation.Destination
+import com.example.languageapp.domain.navigation.Navigator
+import com.example.languageapp.presentation.utils.InternetState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +27,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.BufferedInputStream
-import java.io.BufferedOutputStream
 import java.io.File
 import javax.inject.Inject
 
@@ -29,6 +34,9 @@ import javax.inject.Inject
 class ChoosePasswordViewModel @Inject constructor(
     private val navigator: Navigator,
     private val savedStateHandle: SavedStateHandle,
+    private val getSignUpSavedStateUseCase: GetSignUpSavedStateUseCase,
+    private val updateSignUpSavedStateUseCase: UpdateSignUpSavedStateUseCase,
+    private val signUpUseCase: SignUpUseCase,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val _state = MutableStateFlow(ChoosePasswordState())
@@ -36,13 +44,18 @@ class ChoosePasswordViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ChoosePasswordState())
 
     private fun load() {
-        val route = savedStateHandle.toRoute<Destination.ChoosePassword>()
-        _state.update {
-            it.copy(
-                firstName = route.firstName,
-                lastName = route.lastName,
-                email = route.email
-            )
+        viewModelScope.launch {
+            val route = savedStateHandle.toRoute<Destination.ChoosePassword>()
+            val savedState = getSignUpSavedStateUseCase.invoke()
+            _state.update {
+                it.copy(
+                    firstName = route.firstName,
+                    lastName = route.lastName,
+                    email = route.email,
+                    password = savedState.password,
+                    confirmPassword = savedState.confirmPassword
+                )
+            }
         }
     }
 
@@ -53,12 +66,18 @@ class ChoosePasswordViewModel @Inject constructor(
     }
 
     private fun changePassword(value: String) {
+        viewModelScope.launch {
+            updateSignUpSavedStateUseCase.invoke(password = value)
+        }
         _state.update {
             it.copy(password = value, isPasswordValid = value.isPasswordValid())
         }
     }
 
     private fun changeConfirmPassword(value: String) {
+        viewModelScope.launch {
+            updateSignUpSavedStateUseCase.invoke(confirmPassword = value)
+        }
         _state.update {
             it.copy(confirmPassword = value)
         }
@@ -101,10 +120,44 @@ class ChoosePasswordViewModel @Inject constructor(
         }
     }
 
+    private fun updateInternetState(internetState: InternetState) {
+        _state.update { it.copy(internetState = internetState) }
+    }
+
     private fun signUp() {
         viewModelScope.launch {
-            navigator.navigate(Destination.Home)
-            // TODO: Add logic
+            if (_state.value.password.isNotEmpty() && _state.value.isPasswordValid && _state.value.acceptPrivacy) {
+                if (_state.value.password == _state.value.confirmPassword) {
+                    updateInternetState(
+                        _state.value.internetState.copy(
+                            isLoading = true,
+                            isNoInternet = false
+                        )
+                    )
+                    val signUpResult = signUpUseCase.invoke(
+                        _state.value.firstName,
+                        _state.value.lastName,
+                        _state.value.email,
+                        _state.value.password
+                    ) as DataException?
+                    if (signUpResult == null) {
+                        navigator.navigate(Destination.Login)
+                    } else if (signUpResult.exceptionReason == ExceptionReason.NoInternet) {
+                        updateInternetState(
+                            _state.value.internetState.copy(
+                                isNoInternet = true
+                            )
+                        )
+                    }
+                    updateInternetState(
+                        _state.value.internetState.copy(
+                            isLoading = false
+                        )
+                    )
+                } else {
+                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

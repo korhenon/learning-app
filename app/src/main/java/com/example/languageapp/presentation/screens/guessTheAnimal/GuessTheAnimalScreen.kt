@@ -16,10 +16,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import com.example.languageapp.presentation.composables.CustomTextField
+import com.example.languageapp.presentation.composables.InternetStateView
 import com.example.languageapp.presentation.composables.PrimaryButton
 import com.example.languageapp.presentation.composables.QuestionHeader
 import com.example.languageapp.presentation.screens.guessTheAnimalResult.GuessTheAnimalResultState
 import com.example.languageapp.presentation.theme.LanguageAppTheme
+import com.example.languageapp.presentation.utils.InternetState
 
 @Composable
 fun GuessTheAnimalScreen(
@@ -57,6 +59,7 @@ fun GuessTheAnimalScreen(
             modifier = Modifier.padding(horizontal = 24.dp)
         )
     }
+    InternetStateView(state.internetState, modifier)
 }
 
 @Preview
